@@ -1,1 +1,6 @@
-int mergeSort ( std::vector<int>& nums, int& duration)
+#include "MergeSort.hpp"
+
+int mergeSort(std::vector<int> &nums, int &duration)
+{
+	
+}

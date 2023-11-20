@@ -3,6 +3,7 @@
 #include "StandardSort.hpp"
 #include "MergeSort.hpp"
 #include "InPlaceMergeSort.hpp"
+#include "HalfHeapSort.hpp"
 
 int main()
 {

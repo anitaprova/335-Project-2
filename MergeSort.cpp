@@ -6,7 +6,6 @@ int mergeSort(std::vector<int> &nums, int &duration)
 	
 	if (nums.size() <= 1)
 	{
-		//median
 		return nums[0];
 	}
 

@@ -1,4 +1,4 @@
-OBJECTS = HalfSelectionSort.o StandardSort.o MergeSort.o InPlaceMergeSort.o HalfHeapSort.o
+OBJECTS = HalfSelectionSort.o StandardSort.o MergeSort.o InPlaceMergeSort.o HalfHeapSort.o QuickSelect.o
 CXXFLAGS = -g -c -o
 LDFLAGS =
 CXX = g++
@@ -17,6 +17,8 @@ MergeSort.o: MergeSort.cpp MergeSort.hpp
 InPlaceMergeSort.o: InPlaceMergeSort.cpp InPlaceMergeSort.hpp
 
 HalfHeapSort.o: HalfHeapSort.cpp HalfHeapSort.hpp
+
+QuickSelect.o: QuickSelect.cpp QuickSelect.hpp
 
 clean: 
 	rm main main.o $(OBJECTS)

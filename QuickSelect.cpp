@@ -2,13 +2,42 @@
 
 int quickSelect(std::vector<int> &nums, int &duration)
 {
+	auto start_time = std::chrono::high_resolution_clock::now();
 
-	hoarePartition(nums, nums.begin(), nums.end());
-	
-	return nums[nums.size() / 2]; //median
+	quickSelect(nums, nums.begin(), nums.end());
+
+	auto end_time = std::chrono::high_resolution_clock::now();
+	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+
+	return nums[nums.size() / 2]; // median
 }
 
-void hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+int quickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+{
+	if (std::distance(low, high) <= 10)
+	{
+		std::sort(nums.begin(), nums.begin() + 10);
+		return *(low + (std::distance(low, high)) / 2);
+	}
+
+	// kth smallest element which is the median or middle element
+	auto k = nums.begin() + nums.size() / 2;
+	auto pivot = hoarePartition(nums, low, high);
+	if (k == pivot)
+	{
+		return *k;
+	}
+	else if (k < pivot)
+	{
+		quickSelect(nums, pivot + 1, high);
+	}
+	else
+	{
+		quickSelect(nums, low, pivot - 1);
+	}
+}
+
+std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
 	int pivot = median3(nums, low, high);
 	auto i = low - 1;
@@ -29,7 +58,7 @@ void hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std:
 		if (i >= j)
 		{
 			iter_swap(i, high - 1); // move pivot in proper location
-			break;
+			return i; // returns iterator to pivot 
 		}
 
 		iter_swap(i, j);

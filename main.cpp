@@ -139,7 +139,7 @@ int main()
 
 	// QUICK SELECT
 	std::cout << "QUICK SELECT" << std::endl;
-	unsorted_list = {64, 25, 12, 22, 11};
+	unsorted_list = {64, 25, 12, 22, 11, 52, 5, 9, 99, 75, 13, 2, 0, 89, 17};
 	std::cout << "Unsorted List:" << std::endl;
 	for (const auto &element : unsorted_list)
 	{
@@ -147,23 +147,22 @@ int main()
 	}
 	std::cout << std::endl;
 
-	hoarePartition(unsorted_list, unsorted_list.begin(), unsorted_list.end());
-	std::cout << "hoarePartition: \n";
+	std::cout << "hoarePartition: " << *hoarePartition(unsorted_list, unsorted_list.begin(), unsorted_list.end()) << " \n";
 	for (const auto &element : unsorted_list)
 	{
 		std::cout << element << " ";
 	}
 	std::cout << std::endl;
 
-	// median = quickSelect(unsorted_list, duration);
-	// std::cout << "Sorted List:" << std::endl;
-	// for (const auto &element : unsorted_list)
-	// {
-	// 	std::cout << element << " ";
-	// }
-	// std::cout << std::endl;
-	// std::cout << "Sorting Duration: " << duration << " microseconds"
-	// 					<< " Median: " << median << std::endl;
+	median = quickSelect(unsorted_list, duration);
+	std::cout << "Sorted List:" << std::endl;
+	for (const auto &element : unsorted_list)
+	{
+		std::cout << element << " ";
+	}
+	std::cout << std::endl;
+	std::cout << "Sorting Duration: " << duration << " microseconds"
+						<< " Median: " << median << std::endl;
 
 	return 0;
 }

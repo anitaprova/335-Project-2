@@ -4,6 +4,8 @@
 #include "MergeSort.hpp"
 #include "InPlaceMergeSort.hpp"
 #include "HalfHeapSort.hpp"
+#include "QuickSelect.hpp"
+#include "WorstCaseQuickSelect.hpp"
 
 int main()
 {
@@ -126,6 +128,34 @@ int main()
 	// std::cout << std::endl;
 
 	// median = halfHeapSort(unsorted_list, duration);
+	// std::cout << "Sorted List:" << std::endl;
+	// for (const auto &element : unsorted_list)
+	// {
+	// 	std::cout << element << " ";
+	// }
+	// std::cout << std::endl;
+	// std::cout << "Sorting Duration: " << duration << " microseconds"
+	// 					<< " Median: " << median << std::endl;
+
+	// QUICK SELECT
+	std::cout << "QUICK SELECT" << std::endl;
+	unsorted_list = {64, 25, 12, 22, 11};
+	std::cout << "Unsorted List:" << std::endl;
+	for (const auto &element : unsorted_list)
+	{
+		std::cout << element << " ";
+	}
+	std::cout << std::endl;
+
+	hoarePartition(unsorted_list, unsorted_list.begin(), unsorted_list.end());
+	std::cout << "hoarePartition: \n";
+	for (const auto &element : unsorted_list)
+	{
+		std::cout << element << " ";
+	}
+	std::cout << std::endl;
+
+	// median = quickSelect(unsorted_list, duration);
 	// std::cout << "Sorted List:" << std::endl;
 	// for (const auto &element : unsorted_list)
 	// {

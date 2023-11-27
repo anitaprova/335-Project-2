@@ -13,7 +13,14 @@ int inPlaceMergeSort(std::vector<int> &nums, int &duration)
 	auto end_time = std::chrono::high_resolution_clock::now();
 	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 
-	return nums[nums.size() / 2]; // median
+	if (nums.size() % 2 == 1) // odd
+	{
+		return nums[nums.size() / 2]; // median
+	}
+	else
+	{
+		return nums[(nums.size() - 1) / 2];
+	}
 }
 
 // helper function

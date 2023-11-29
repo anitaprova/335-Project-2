@@ -7,7 +7,7 @@
 #include "InPlaceMergeSort.hpp"
 #include "HalfHeapSort.hpp"
 #include "QuickSelect.hpp"
-#include "WorstCaseQuickSelect.hpp"
+//#include "WorstCaseQuickSelect.hpp"
 
 int main()
 {
@@ -90,14 +90,14 @@ int main()
 
 	// HEAPSORT
 	std::cout << "HEAPSORT" << std::endl;
-	// unsorted_list = {54, 58, 79, 70, 54, 63, 89, 69, 55, 84, 74, 75, 87};
+	//unsorted_list = {54, 58, 79, 70, 54, 63, 89, 69, 55, 84, 74, 75, 87};
 	median = halfHeapSort(unsorted_list, duration);
 	// for (const auto &element : unsorted_list)
 	// {
 	// 	std::cout << element << " ";
 	// }
 	// std::cout << std::endl;
-
+	
 	for (int i = 0; i < unsorted_list.size(); i++)
 	{
 		if (unsorted_list[i] != sorted_list[i])
@@ -132,7 +132,7 @@ int main()
 
 	// QUICK SELECT
 	// std::cout << "QUICK SELECT" << std::endl;
-	// unsorted_list = {64, 25, 12, 22, 11, 52, 5, 9, 99, 75, 13, 2, 0, 89, 17};
+	//unsorted_list = {64, 25, 12, 22, 11, 52, 5, 9, 99, 75, 13, 2, 0};
 	// for (const auto &element : unsorted_list)
 	// {
 	// 	std::cout << element << " ";
@@ -140,7 +140,7 @@ int main()
 	// std::cout << std::endl;
 
 	// //Hoares Partition
-	// std::cout << "hoarePartition: " << *hoarePartition(unsorted_list, unsorted_list.begin(), unsorted_list.end()) << " \n";
+	// std::cout << "hoarePartition: " << *hoarePartition(unsorted_list, unsorted_list.begin(), unsorted_list.end()-1) << " \n";
 	// for (const auto &element : unsorted_list)
 	// {
 	// 	std::cout << element << " ";

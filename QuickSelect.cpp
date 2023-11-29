@@ -2,108 +2,86 @@
 
 int quickSelect(std::vector<int> &nums, int &duration)
 {
-	auto start_time = std::chrono::high_resolution_clock::now();
+    auto start_time = std::chrono::high_resolution_clock::now();
 
-	quickSelect(nums, nums.begin(), nums.end());
+    std::vector<int>::iterator middle = nums.begin() + std::distance(nums.begin(), nums.end() - 1) / 2;
+    quickSelect(nums, nums.begin(), nums.end() - 1, middle);
 
-	auto end_time = std::chrono::high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
-
-	return nums[nums.size() / 2]; // median
+		auto end_time = std::chrono::high_resolution_clock::now();
+  	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+    
+		return *(middle);
 }
 
-int quickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+void quickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
 {
-	if (std::distance(low, high) <= 10)
-	{
-		std::sort(nums.begin(), nums.begin() + 10);
-		return *(low + (std::distance(low, high)) / 2);
-	}
+    if (left + 10 <= right)
+    {
+        std::vector<int>::iterator pivot = median3(nums, left, right);
+        std::iter_swap(pivot, right - 1);
+        std::vector<int>::iterator i = hoarePartition(nums, left, right);
+        std::iter_swap(i, right);
 
-	// kth smallest element which is the median or middle element
-	auto k = nums.begin() + nums.size() / 2;
-	auto pivot = hoarePartition(nums, low, high);
-	if (k == pivot)
-	{
-		return *k;
-	}
-	else if (k < pivot)
-	{
-		quickSelect(nums, pivot + 1, high);
-	}
-	else
-	{
-		quickSelect(nums, low, pivot - 1);
-	}
+        if (k < i)
+        {
+            quickSelect(nums, left, i - 1, k);
+        }
+        else if (k > i + 1)
+        {
+            quickSelect(nums, i + 1, right, k);
+        }
+    }
+    else
+    {
+        std::sort(left, right);
+    }
 }
 
 std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-	int pivot = median3(nums, low, high);
-	auto i = low - 1;
-	auto j = high - 1; // not the last element because its the pivot
+    std::vector<int>::iterator pivot = high; //should be in the back of the vector
+    std::vector<int>::iterator i = low;
+    std::vector<int>::iterator j = high - 1; // need the -1 because the pivot is in the back
 
-	while (true)
-	{
-		do
-		{
-			++i;
-		} while (*i < pivot);
-
-		do
-		{
-			--j;
-		} while (*j > pivot);
-
-		if (i >= j)
-		{
-			iter_swap(i, high - 1); // move pivot in proper location
-			return i; // returns iterator to pivot 
-		}
-
-		iter_swap(i, j);
-	}
+    for (; ;)
+    {
+        while (*i <= *pivot)
+        {
+            ++i;
+        }
+        while (*pivot <= *j)
+        {
+            --j;
+        }
+        if (i < j)
+        {
+            std::iter_swap(i, j);
+        }
+        else
+        {
+            break;
+        }
+    }
+    return i;
 }
 
-// swap last element with pivot and return pivot
-int median3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-	int right = *low;
-	int left = *(high - 1);
-	int center = *(low + nums.size() / 2);
+  std::vector<int>::iterator mid =  low + (high - low) / 2;
+    
+	if (*low > *mid)
+	{
+		std::iter_swap(low, mid);
+	}
 
-	if (left < center)
+  if (*low > *high)
 	{
-		if (center < right)
-		{
-			iter_swap(low + nums.size() / 2, high - 1);
-			return center;
-		}
-		else if (left < right)
-		{
-			iter_swap(low, high - 1);
-			return right;
-		}
-		else
-		{
-			return left;
-		}
+		std::iter_swap(low, high);
 	}
-	else
+
+  if (*mid > *high)
 	{
-		if (left < right)
-		{
-			return left;
-		}
-		else if (center < right)
-		{
-			iter_swap(low, high - 1);
-			return right;
-		}
-		else
-		{
-			iter_swap(low + nums.size() / 2, high - 1);
-			return center;
-		}
+		std::iter_swap(mid, high);
 	}
+	return mid;
 }

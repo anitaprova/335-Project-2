@@ -3,16 +3,15 @@
 int halfHeapSort(std::vector<int> &nums, int &duration)
 {
    auto start_time = std::chrono::high_resolution_clock::now();
-   
-   nums.push_back(std::move(nums[0]));
+   nums.push_back(nums[0]);
    buildHeap(nums);
 
    // delete min
    // moving first element to back so theres a 'hole'
-   int size = nums.size();
-   for (int j = nums.size() - 1; j > size / 2; --j)
+   int middle = (nums.size() - 2) / 2;
+   for (int j = 0; j < middle; ++j)
    {
-      std::swap(nums[1], nums[j]);
+      nums[0] = nums[nums.size() - 1];
       nums.pop_back();
       percDown(nums, 1);
    }
@@ -20,15 +19,15 @@ int halfHeapSort(std::vector<int> &nums, int &duration)
    auto end_time = std::chrono::high_resolution_clock::now();
    duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
 
-   return nums[1];
+   return nums[0];
 }
 
 void percDown(std::vector<int> &heap, std::vector<int>::size_type hole)
 {
-   int temp = heap[hole];
+   int temp = heap[0];
    int child;
 
-   for (; hole * 2 <= heap.size(); hole = child)
+   for (; hole * 2 < heap.size(); hole = child)
    {
       child = hole * 2;
       if (child + 1 < heap.size() && heap[child + 1] < heap[child])
@@ -36,7 +35,7 @@ void percDown(std::vector<int> &heap, std::vector<int>::size_type hole)
          ++child;
       }
 
-      if (heap[child] < temp)
+      if (temp > heap[child])
       {
          heap[hole] = heap[child];
       }
@@ -52,6 +51,7 @@ void buildHeap(std::vector<int> &heap)
 {
    for (int i = (heap.size() - 1) / 2; i > 0; --i)
    {
+      heap[0] = heap[i];
       percDown(heap, i);
    }
 }

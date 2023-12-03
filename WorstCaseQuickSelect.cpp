@@ -12,30 +12,30 @@ std::vector<int> &worstCaseQuickSelect(void)
 
 	int duration;
 	quickSelect(v, duration);
+
+	return v;
 }
 
-// will modify the following so that it will pick the worst pivot 
-// worst pivot should be either first or last element?
-int quickSelect(std::vector<int> &nums, int &duration)
+int worstCaseQuickSelect(std::vector<int> &nums, int &duration)
 {
 	auto start_time = std::chrono::high_resolution_clock::now();
 
 	std::vector<int>::iterator middle = nums.begin() + std::distance(nums.begin(), nums.end() - 1) / 2;
-	quickSelect(nums, nums.begin(), nums.end() - 1, middle);
+	worstCaseQuickSelect(nums, nums.begin(), nums.end() - 1, middle);
 
 	auto end_time = std::chrono::high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
 	return *(middle);
 }
 
-void quickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
+void worstCaseQuickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
 {
 	if (left + 10 <= right)
 	{
-		std::vector<int>::iterator pivot = median3(nums, left, right);
+		std::vector<int>::iterator pivot = worstCaseQuickSelectMedian3(nums, left, right);
 		std::iter_swap(pivot, right - 1);
-		std::vector<int>::iterator i = hoarePartition(nums, left, right);
+		std::vector<int>::iterator i = worstCaseHoarePartition(nums, left, right);
 		std::iter_swap(i, right);
 
 		if (k < i)
@@ -53,7 +53,7 @@ void quickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::v
 	}
 }
 
-std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+std::vector<int>::iterator worstCaseHoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
 	std::vector<int>::iterator pivot = high; // should be in the back of the vector
 	std::vector<int>::iterator i = low;
@@ -81,7 +81,8 @@ std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<in
 	return i;
 }
 
-std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+// will modify the following so that it will pick the worst pivot out of the three
+std::vector<int>::iterator worstCaseQuickSelectMedian3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
 	std::vector<int>::iterator mid = low + (high - low) / 2;
 
@@ -100,5 +101,6 @@ std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::ite
 		std::iter_swap(mid, high);
 	}
 
-	return mid;
+	//we want the worst pivot so either low or high 
+	return high;
 }

@@ -11,7 +11,7 @@ int inPlaceMergeSort(std::vector<int> &nums, int &duration)
 	std::inplace_merge(nums.begin(), middle + 1, nums.end());
 
 	auto end_time = std::chrono::high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
 	if (nums.size() % 2 == 1) // odd
 	{

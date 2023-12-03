@@ -4,25 +4,41 @@ int quickSelect(std::vector<int> &nums, int &duration)
 {
     auto start_time = std::chrono::high_resolution_clock::now();
 
-    std::vector<int>::iterator middle = nums.begin() + std::distance(nums.begin(), nums.end() - 1) / 2;
-    quickSelect(nums, nums.begin(), nums.end() - 1, middle);
+    std::vector<int>::iterator left = nums.begin();
+    std::vector<int>::iterator right = nums.end() - 1;
+    std::vector<int>::iterator middle = nums.begin() + (std::distance(left, right) / 2);
+
+    quickSelect(nums, left, right, middle);
 
     auto end_time = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-    return *(middle);
+    //return *(middle);
+    if (nums.size() % 2 == 1) // odd
+	{
+		return *(middle); // median
+	}
+	else
+	{
+		return *(middle - 1);
+	}
 }
 
 void quickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
 {
     if (left + 10 <= right)
     {
-        std::vector<int>::iterator pivot = median3(nums, left, right);
-        std::iter_swap(pivot, right - 1);
-        std::vector<int>::iterator i = hoarePartition(nums, left, right);
-        std::iter_swap(i, right);
+        std::vector<int>::iterator pivot = median3(nums, left, right); //get median
 
-        if (k < i)
+        std::cout << "PIVOT: " << *pivot << "    INDEX: " << std::distance(nums.begin(),pivot) << "\n";
+
+        std::iter_swap(pivot, right - 1); //swap pivot with last element
+
+        std::vector<int>::iterator i = hoarePartition(nums, left, right-1); //returns where the pivot is
+        std::iter_swap(i, right-1); //restores pivot
+
+
+        if (k <= i)
         {
             quickSelect(nums, left, i - 1, k);
         }
@@ -41,19 +57,17 @@ std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<in
 {
     std::vector<int>::iterator pivot = high; // should be in the back of the vector
     std::vector<int>::iterator i = low;
-    std::vector<int>::iterator j = high - 1; // need the -1 because the pivot is already in the back
+    std::vector<int>::iterator j = high; // need the -1 because the pivot is already in the back
 
-    for (;;)
+    for (; ;)
     {
-        while (*i <= *pivot)
-        {
-            ++i;
+        while (*(++i) < *pivot)
+        {   
         }
-        while (*pivot <= *j)
+        while (*pivot < *(--j))
         {
-            --j;
         }
-        if (i < j)
+        if (std::distance(i, j) <= 0)
         {
             std::iter_swap(i, j);
         }

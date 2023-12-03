@@ -1,1 +1,3 @@
-int medianOfMedians ( std::vector<int>& nums, int& duration)
+#include "MedianOfMedians.hpp"
+
+int medianOfMedians ( std::vector<int>& nums, int& duration){}

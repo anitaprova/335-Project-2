@@ -1,74 +1,65 @@
 #include "WorstCaseQuickSelect.hpp"
-#include "QuickSelect.hpp"
 
 std::vector<int> &worstCaseQuickSelect(void)
 {
 	std::vector<int> v;
-
-	for (int i = 0; i < 20000; i++)
+	for (int i = 1; i <= 20000; i++)
 	{
 		v.push_back(i);
 	}
 
-	int duration;
-	quickSelect(v, duration);
+	worstCaseQuickSelect(v);
 
 	return v;
 }
 
-int worstCaseQuickSelect(std::vector<int> &nums, int &duration)
+int worstCaseQuickSelect(std::vector<int> &nums)
 {
-	auto start_time = std::chrono::high_resolution_clock::now();
+	std::vector<int>::iterator middle = nums.begin() + (nums.size() - 1) / 2;
 
-	std::vector<int>::iterator middle = nums.begin() + std::distance(nums.begin(), nums.end() - 1) / 2;
 	worstCaseQuickSelect(nums, nums.begin(), nums.end() - 1, middle);
 
-	auto end_time = std::chrono::high_resolution_clock::now();
-	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-
-	return *(middle);
+	return *middle;
 }
 
-void worstCaseQuickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
+void worstCaseQuickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high, std::vector<int>::iterator k)
 {
-	if (left + 10 <= right)
+	// base case
+	if (high < low + 10)
 	{
-		std::vector<int>::iterator pivot = worstCaseQuickSelectMedian3(nums, left, right);
-		std::iter_swap(pivot, right - 1);
-		std::vector<int>::iterator i = worstCaseHoarePartition(nums, left, right);
-		std::iter_swap(i, right);
-
-		if (k < i)
-		{
-			quickSelect(nums, left, i - 1, k);
-		}
-		else if (k > i + 1)
-		{
-			quickSelect(nums, i + 1, right, k);
-		}
+		std::sort(low, high + 1);
 	}
 	else
 	{
-		std::sort(left, right);
+		std::vector<int>::iterator i = worstCaseHoarePartition(nums, low, high);
+		if (i <= k)
+		{
+			worstCaseQuickSelect(nums, i + 1, high, k);
+		}
+		else
+		{
+			worstCaseQuickSelect(nums, low, i - 1, k);
+		}
 	}
 }
 
 std::vector<int>::iterator worstCaseHoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-	std::vector<int>::iterator pivot = high; // should be in the back of the vector
+	std::vector<int>::iterator pivot = worstCaseMedian3(nums, low, high);
 	std::vector<int>::iterator i = low;
-	std::vector<int>::iterator j = high - 1; // need the -1 because the pivot is already in the back
+	std::vector<int>::iterator j = pivot - 1; // need the -1 because the pivot is already in the back
 
 	for (;;)
 	{
-		while (*i <= *pivot)
+		while (i < pivot && *i < *pivot)
 		{
 			++i;
 		}
-		while (*pivot <= *j)
+		while (j > low && *j > *pivot)
 		{
 			--j;
 		}
+
 		if (i < j)
 		{
 			std::iter_swap(i, j);
@@ -78,29 +69,45 @@ std::vector<int>::iterator worstCaseHoarePartition(std::vector<int> &nums, std::
 			break;
 		}
 	}
+	std::iter_swap(i, pivot); // put pivot back in proper place
+
 	return i;
 }
 
-// will modify the following so that it will pick the worst pivot out of the three
-std::vector<int>::iterator worstCaseQuickSelectMedian3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
+std::vector<int>::iterator worstCaseMedian3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-	std::vector<int>::iterator mid = low + (high - low) / 2;
+	std::vector<int>::iterator mid = low + ((high - low) / 2);
 
-	if (*low > *mid)
-	{
-		std::iter_swap(low, mid);
-	}
-
-	if (*low > *high)
+	if (*low == *mid && *low == *high) // all three are the same
 	{
 		std::iter_swap(low, high);
 	}
-
-	if (*mid > *high)
+	else if (*low == *mid || *low == *high) // low and middle are the same or low and high are the same
+	{
+		std::iter_swap(low, high);
+	}
+	else if (*mid == *high) // if middle and high share the same value
 	{
 		std::iter_swap(mid, high);
 	}
+	else // all the values are different now
+	{
+		// descending order 
+		if (*high < *mid && *mid < *low)
+		{
+			std::iter_swap(low, high);
+		}
 
-	//we want the worst pivot so either low or high 
+		if (*low < *mid && *mid > *high)
+		{
+			std::iter_swap(mid, high);
+		}
+
+		if(*low < *mid && *mid < *high)
+		{
+			std::iter_swap(low, mid);
+		}
+	}
+
 	return high;
 }

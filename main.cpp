@@ -7,7 +7,7 @@
 #include "InPlaceMergeSort.hpp"
 #include "HalfHeapSort.hpp"
 #include "QuickSelect.hpp"
-//#include "WorstCaseQuickSelect.hpp"
+#include "WorstCaseQuickSelect.hpp"
 
 int main()
 {
@@ -116,24 +116,21 @@ int main()
 	// 					<< " Median: " << median << std::endl;
 
 	// QUICK SELECT
-	std::cout << "QUICK SELECT" << std::endl;
-	median = quickSelect(input1, duration);
-	std::cout << std::endl;
-	std::cout << "Sorting Duration: " << duration << " milliseconds"
-						<< " Median: " << median << std::endl;
-
-	//WORST CASE QUICKSELECT
-	// std::cout << "\nWORST CASE QUICK SELECT" << std::endl;
-	// auto start_time = std::chrono::high_resolution_clock::now();
-
-	// std::vector<int> worstCaseQuickSelectVector = worstCaseQuickSelect();
-	// median = worstCaseQuickSelectVector[worstCaseQuickSelectVector.size()/2];
-
-	// auto end_time = std::chrono::high_resolution_clock::now();
-  // duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
-
+	// std::cout << "QUICK SELECT" << std::endl;
+	// median = quickSelect(input9, duration);
+	// std::cout << std::endl;
 	// std::cout << "Sorting Duration: " << duration << " milliseconds"
 	// 					<< " Median: " << median << std::endl;
 
+	//WORST CASE QUICKSELECT
+	std::cout << "\nWORST CASE QUICK SELECT" << std::endl;
+	auto start_time = std::chrono::high_resolution_clock::now();
+
+	std::vector<int> &worstCaseQuickSelectVector = worstCaseQuickSelect();
+
+	auto end_time = std::chrono::high_resolution_clock::now();
+  duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+
+	std::cout << "Sorting Duration: " << duration << " milliseconds" << std::endl;
 	return 0;
 }

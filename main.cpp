@@ -7,7 +7,7 @@
 #include "InPlaceMergeSort.hpp"
 #include "HalfHeapSort.hpp"
 #include "QuickSelect.hpp"
-#include "WorstCaseQuickSelect.hpp"
+//#include "WorstCaseQuickSelect.hpp"
 
 int main()
 {

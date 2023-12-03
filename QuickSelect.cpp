@@ -2,72 +2,57 @@
 
 int quickSelect(std::vector<int> &nums, int &duration)
 {
-    auto start_time = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::steady_clock::now();
 
-    std::vector<int>::iterator left = nums.begin();
-    std::vector<int>::iterator right = nums.end() - 1;
-    std::vector<int>::iterator middle = nums.begin() + (std::distance(left, right) / 2);
+    std::vector<int>::iterator middle = nums.begin() + (nums.size() - 1) / 2;
 
-    quickSelect(nums, left, right, middle);
+    quickSelect(nums, nums.begin(), nums.end() - 1, middle);
 
-    auto end_time = std::chrono::high_resolution_clock::now();
-    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+    auto end = std::chrono::steady_clock::now();
+    duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    //return *(middle);
-    if (nums.size() % 2 == 1) // odd
-	{
-		return *(middle); // median
-	}
-	else
-	{
-		return *(middle - 1);
-	}
+    return *middle; // returning the middle element as the pivot
 }
 
-void quickSelect(std::vector<int> &nums, std::vector<int>::iterator left, std::vector<int>::iterator right, std::vector<int>::iterator k)
+void quickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high, std::vector<int>::iterator k)
 {
-    if (left + 10 <= right)
+    // base case
+    if (high < low + 10)
     {
-        std::vector<int>::iterator pivot = median3(nums, left, right); //get median
-
-        std::cout << "PIVOT: " << *pivot << "    INDEX: " << std::distance(nums.begin(),pivot) << "\n";
-
-        std::iter_swap(pivot, right - 1); //swap pivot with last element
-
-        std::vector<int>::iterator i = hoarePartition(nums, left, right-1); //returns where the pivot is
-        std::iter_swap(i, right-1); //restores pivot
-
-
-        if (k <= i)
-        {
-            quickSelect(nums, left, i - 1, k);
-        }
-        else if (k > i + 1)
-        {
-            quickSelect(nums, i + 1, right, k);
-        }
+        std::sort(low, high + 1);
     }
     else
     {
-        std::sort(left, right);
+        std::vector<int>::iterator i = hoarePartition(nums, low, high);
+        if (i <= k)
+        {
+            quickSelect(nums, i + 1, high, k);
+        }
+        else
+        {
+            quickSelect(nums, low, i - 1, k);
+        }
     }
 }
 
 std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-    std::vector<int>::iterator pivot = high; // should be in the back of the vector
+    std::vector<int>::iterator pivot = median3(nums, low, high); // return the pivot iterator, which is at high - 1
     std::vector<int>::iterator i = low;
-    std::vector<int>::iterator j = high; // need the -1 because the pivot is already in the back
+    std::vector<int>::iterator j = pivot - 1; // high is the position of pivot, and high - 1 will be the right start of our partitioning
 
-    for (; ;)
+    for (;;)
     {
-        while (*(++i) < *pivot)
-        {   
-        }
-        while (*pivot < *(--j))
+        while (i < pivot && *i < *pivot)
         {
+            ++i;
         }
-        if (std::distance(i, j) <= 0)
+        while (j > low && *j > *pivot)
+        {
+            --j;
+        }
+
+        if (i < j)
         {
             std::iter_swap(i, j);
         }
@@ -76,27 +61,48 @@ std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<in
             break;
         }
     }
+    std::iter_swap(i, pivot); // put pivot back in proper place
+
     return i;
 }
 
 std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-    std::vector<int>::iterator mid = low + (high - low) / 2;
+    std::vector<int>::iterator mid = low + ((high - low) / 2);
 
-    if (*low > *mid)
-    {
-        std::iter_swap(low, mid);
-    }
-
-    if (*low > *high)
+    if (*low == *mid && *low == *high) // all three are the same
     {
         std::iter_swap(low, high);
     }
-
-    if (*mid > *high)
+    else if (*low == *mid || *low == *high) // low and middle are the same or low and high are the same
+    {
+        std::iter_swap(low, high);
+    }
+    else if (*mid == *high) // if middle and high share the same value
     {
         std::iter_swap(mid, high);
     }
+    else // all the values are different now
+    {
+        // already in correct order
+        if ((*low < *mid && *mid < *high))
+        {
+            // middle holds the pivot so we move to the back
+            std::iter_swap(mid, high);
+        }
 
-    return mid;
+        if (*high < *mid && *mid < *low)
+        {
+            std::iter_swap(low, high);
+            std::iter_swap(mid, low);
+        }
+
+        // pivot in low
+        if ((*mid < *low && *low < *high) || (*high < *low && *low < *mid))
+        {
+            std::iter_swap(low, high);
+        }
+    }
+
+    return high;
 }

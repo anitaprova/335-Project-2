@@ -11,7 +11,7 @@ int quickSelect(std::vector<int> &nums, int &duration)
     auto end = std::chrono::steady_clock::now();
     duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
-    return *middle; // returning the middle element as the pivot
+    return *middle;
 }
 
 void quickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high, std::vector<int>::iterator k)
@@ -37,9 +37,9 @@ void quickSelect(std::vector<int> &nums, std::vector<int>::iterator low, std::ve
 
 std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high)
 {
-    std::vector<int>::iterator pivot = median3(nums, low, high); // return the pivot iterator, which is at high - 1
+    std::vector<int>::iterator pivot = median3(nums, low, high);
     std::vector<int>::iterator i = low;
-    std::vector<int>::iterator j = pivot - 1; // high is the position of pivot, and high - 1 will be the right start of our partitioning
+    std::vector<int>::iterator j = pivot - 1; // need the -1 because the pivot is already in the back
 
     for (;;)
     {

@@ -117,32 +117,7 @@ int main()
 
 	// QUICK SELECT
 	std::cout << "QUICK SELECT" << std::endl;
-	// // input1 = {54, 58, 79, 70, 54, 63, 89, 69, 55, 84, 74, 75, 87};
-
-	// // Hoares Partition
-	// //  std::cout << "hoarePartition: " << *hoarePartition(input1, input1.begin(), input1.end()-1) << " \n";
-	// //  for (const auto &element : input1)
-	// //  {
-	// //  	std::cout << element << " ";
-	// //  }
-	// //  std::cout << std::endl;
-
 	median = quickSelect(input1, duration);
-	// std::cout << "Sorted List:" << std::endl;
-	// // for (const auto &element : input1)
-	// // {
-	// // 	std::cout << element << " ";
-	// // }
-
-	for (int i = 0; i < input1.size(); i++)
-	{
-		if (input1[i] != sorted_list[i])
-		{
-			std::cout << "DOES NOT WORK " << i << " " << input1[i] << " " << sorted_list[i] << "\n";
-			break;
-		}
-	}
-
 	std::cout << std::endl;
 	std::cout << "Sorting Duration: " << duration << " milliseconds"
 						<< " Median: " << median << std::endl;

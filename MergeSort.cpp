@@ -10,6 +10,8 @@ int mergeSort(std::vector<int> &nums, int &duration)
 	}
 
 	int middle = nums.size() / 2;
+
+	// created new vector for merging because it's not in-place
 	std::vector<int> left(nums.begin(), nums.begin() + middle);
 	std::vector<int> right(nums.begin() + middle, nums.end());
 
@@ -21,12 +23,13 @@ int mergeSort(std::vector<int> &nums, int &duration)
 	auto end_time = std::chrono::high_resolution_clock::now();
 	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-	if (nums.size() % 2 == 1) // odd
+	// gives median depending on whether list is even or odd
+	if (nums.size() % 2 == 1)
 	{
-		return nums[nums.size() / 2]; // median
+		return nums[nums.size() / 2];
 	}
-	else 
+	else
 	{
-		return nums[(nums.size()-1) / 2];
+		return nums[(nums.size() - 1) / 2];
 	}
 }

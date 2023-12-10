@@ -27,5 +27,5 @@ int halfSelectionSort(std::vector<int> &nums, int &duration)
 	auto end_time = std::chrono::high_resolution_clock::now();
 	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-	return nums[nums.size() / 2]; //median
+	return nums[nums.size() / 2];
 }

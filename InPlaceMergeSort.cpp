@@ -13,9 +13,10 @@ int inPlaceMergeSort(std::vector<int> &nums, int &duration)
 	auto end_time = std::chrono::high_resolution_clock::now();
 	duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-	if (nums.size() % 2 == 1) // odd
+	// gives median depending on whether list is even or odd
+	if (nums.size() % 2 == 1)
 	{
-		return nums[nums.size() / 2]; // median
+		return nums[nums.size() / 2];
 	}
 	else
 	{
@@ -23,17 +24,18 @@ int inPlaceMergeSort(std::vector<int> &nums, int &duration)
 	}
 }
 
-// helper function
+// helper function for MergeSort
 int MergeSort(std::vector<int> &nums, std::vector<int>::iterator l, std::vector<int>::iterator r)
 {
-	if (std::distance(l, r) <= 0) // only one element left
+	// base case where there is only one element left
+	if (std::distance(l, r) <= 0)
 	{
 		return *l;
 	}
 
 	auto middle = l + std::distance(l, r) / 2;
-	MergeSort(nums, l, middle);			// left
-	MergeSort(nums, middle + 1, r); // right
+	MergeSort(nums, l, middle);			// spilts into left of middle
+	MergeSort(nums, middle + 1, r); // rspilts into ight of middle
 
 	std::inplace_merge(l, middle + 1, r + 1);
 }

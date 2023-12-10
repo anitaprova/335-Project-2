@@ -109,5 +109,6 @@ std::vector<int>::iterator worstCaseMedian3(std::vector<int> &nums, std::vector<
 		}
 	}
 
+	// we need to pick the worst pivot so we are returning high
 	return high;
 }

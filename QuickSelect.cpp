@@ -97,7 +97,7 @@ std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::ite
             std::iter_swap(mid, low);
         }
 
-        // pivot in low
+        // pivot is in low
         if ((*mid < *low && *low < *high) || (*high < *low && *low < *mid))
         {
             std::iter_swap(low, high);

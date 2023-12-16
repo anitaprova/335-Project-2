@@ -1,10 +1,34 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <cmath>
 
+/**
+ * sorts the vector halfway using heapsort algorithm through in order to obtain median
+ * @param nums: reference to the vector to be sorted
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: element 1 of the heap
+ */
 int halfHeapSort (std::vector<int>& nums, int& duration);
+
+/**
+ * moves the hole into the correct place so heap order property is maintained
+ * @param heap: reference to the heap to be sorted
+ * @param hole: location of where to start percolating from
+ */
 void percDown(std::vector<int> &heap, std::vector<int>::size_type hole);
+
+/**
+ * creates a min heap given a vector
+ * @param heap: reference to the heap
+ */
 void buildHeap(std::vector<int> &heap);
 
 /**

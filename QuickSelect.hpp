@@ -1,11 +1,46 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
 
+/**
+ * implements quickselect algorithm using the median-of-3 pivot selection
+ * @param nums: reference to the vector to be sorted
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: median of vector
+ */
 int quickSelect(std::vector<int> &nums, int &duration);
+
+/**
+ * helper function for quickselect
+ * @param low: iterator to beginning of vector to be sorted
+ * @param high: iterator to end of vector to be sorted
+ */
 void quickSelect(std::vector<int> &nums, std::vector<int>::iterator high, std::vector<int>::iterator low, std::vector<int>::iterator k);
+
+/**
+ * partitions the subarray using Hoare's partition algorithm
+ * @param nums: reference to the vector to be sorted.
+ * @param low: iterator pointing to the first element in the subarray
+ * @param high: iterator pointing to the last element in the subarray
+ * @return: iterator to pivot
+ */
 std::vector<int>::iterator hoarePartition(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high);
+
+/**
+ * gets median using median-of-three algorithm
+ * @param nums: reference to the vector to be sorted
+ * @param low: iterator pointing to the first element in the subarray
+ * @param high: iterator pointing to the last element in the subarray
+ * @return: iterator to pivot
+ */
 std::vector<int>::iterator median3(std::vector<int> &nums, std::vector<int>::iterator low, std::vector<int>::iterator high);
 
 /**

@@ -1,7 +1,20 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 
+/**
+ * sorts the vector halfway using modified selectionsort algorithm in order to obtain median
+ * @param nums: reference to the vector to be sorted
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: median of vector
+ */
 int halfSelectionSort ( std::vector<int>& nums, int& duration);
 
 /**

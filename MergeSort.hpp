@@ -1,8 +1,21 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
 
+/**
+ * implements merge sort recursively using std::merge
+ * @param nums: reference to the vector to be sorted
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: median of vector
+ */
 int mergeSort(std::vector<int> &nums, int &duration);
 
 /**

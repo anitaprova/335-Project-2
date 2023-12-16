@@ -1,10 +1,30 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
 #include <cmath>
 
+/**
+ * implements merge sort recursively using std::inplace_merge
+ * @param nums: reference to the vector to be sorted
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: median of vector
+ */
 int inPlaceMergeSort (std::vector<int>& nums, int& duration);
+
+/**
+ * helper function for inplace_merge sort
+ * @param l: iterator to elements left of the middle of the vector
+ * @param r: iterator to elements right of the middle of the vector
+ * @return: element of vector for base call
+ */
 int MergeSort(std::vector<int> &nums, std::vector<int>::iterator l, std::vector<int>::iterator r);
 
 /**

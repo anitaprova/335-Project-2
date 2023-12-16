@@ -1,8 +1,21 @@
+/*
+CSCI335 Fall 2023
+Assignment 2
+Name Anita Prova
+Date 12/15/23
+*/
+
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
 
+/**
+ * uses c++ standard sort to sort the vector
+ * @param nums: reference to the vector to be sorted.
+ * @param duration: reference to the time taken to complete the sorting process
+ * @return: median of vector
+ */
 int standardSort (std::vector<int>& nums, int& duration);
 
 /**

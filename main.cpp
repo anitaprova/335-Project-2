@@ -85,6 +85,8 @@ int main()
 		sorted_list.push_back(num);
 	}
 
+	//The following was used for testing for the report
+
 	// HALF SELECTION SORT
 	// std::cout << "HALF SELECTION SORT" << std::endl;
 	// median = halfSelectionSort(input7, duration);
@@ -126,11 +128,13 @@ int main()
 	std::cout << "\nWORST CASE QUICK SELECT" << std::endl;
 	auto start_time = std::chrono::high_resolution_clock::now();
 
-	std::vector<int> &worstCaseQuickSelectVector = worstCaseQuickSelect();
+	std::vector<int> worstCase = worstCaseQuickSelect();
+	worstCaseQuickSelect(worstCase);
 
 	auto end_time = std::chrono::high_resolution_clock::now();
   duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
 	std::cout << "Sorting Duration: " << duration << " milliseconds" << std::endl;
+
 	return 0;
 }

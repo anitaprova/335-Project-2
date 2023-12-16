@@ -125,16 +125,16 @@ int main()
 	// 					<< " Median: " << median << std::endl;
 
 	//WORST CASE QUICKSELECT
-	std::cout << "\nWORST CASE QUICK SELECT" << std::endl;
-	auto start_time = std::chrono::high_resolution_clock::now();
+	// std::cout << "WORST CASE QUICK SELECT" << std::endl;
+	// auto start_time = std::chrono::high_resolution_clock::now();
 
-	std::vector<int> worstCase = worstCaseQuickSelect();
-	worstCaseQuickSelect(worstCase);
+	// std::vector<int> worstCase = worstCaseQuickSelect();
+	// worstCaseQuickSelect(worstCase);
 
-	auto end_time = std::chrono::high_resolution_clock::now();
-  duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
+	// auto end_time = std::chrono::high_resolution_clock::now();
+  // duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time).count();
 
-	std::cout << "Sorting Duration: " << duration << " milliseconds" << std::endl;
+	// std::cout << "Sorting Duration: " << duration << " milliseconds" << std::endl;
 
 	return 0;
 }
